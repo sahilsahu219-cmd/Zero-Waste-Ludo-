@@ -1,83 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Zero Waste Ludo – School Game</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #e8f5e9;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 { color: #2e7d32; }
-    button {
-      padding: 12px 20px;
-      margin: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background: #4caf50;
-      color: white;
-    }
-    .box {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Zero Waste Ludo – School Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #e8f5e9;
+  padding: 20px;
+}
+button {
+  padding: 12px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+#gameArea {
+  display: none;
+  margin-top: 30px;
+}
+#question {
+  font-size: 18px;
+  margin: 20px;
+}
+</style>
 </head>
 <body>
 
 <h1>♻️ Zero Waste Ludo</h1>
-<p>Choose Language / भाषा चुनें</p>
+<p>Select Language / भाषा चुनें</p>
 
-<button onclick="setLang('en')">English</button>
-<button onclick="setLang('hi')">हिंदी</button>
+<button onclick="startGame('en')">English</button>
+<button onclick="startGame('hi')">हिंदी</button>
 
-<div class="box" id="gameBox" style="display:none;">
-  <h2 id="title"></h2>
+<div id="gameArea">
   <p id="question"></p>
-  <button onclick="answer(true)">✔ Correct</button>
-  <button onclick="answer(false)">✖ Wrong</button>
-  <p id="result"></p>
+  <button onclick="answer(true)">✔️ Correct</button>
+  <button onclick="answer(false)">❌ Wrong</button>
+  <p id="feedback"></p>
 </div>
 
 <script>
-let lang = "en";
-
-const data = {
-  en: {
-    title: "Player Turn 🎲",
-    q: "Where should wet waste be put?",
-    correct: "Green Bin",
-    wrong: "Plastic Bin"
-  },
-  hi: {
-    title: "खिलाड़ी की बारी 🎲",
-    q: "गीला कचरा कहाँ डालना चाहिए?",
-    correct: "हरे डिब्बे में",
-    wrong: "प्लास्टिक डिब्बे में"
-  }
+let lang = "";
+const questions = {
+  en: [
+    "Which bin is used for wet waste?",
+    "Where should plastic waste go?",
+    "What kind of waste is battery waste?"
+  ],
+  hi: [
+    "गीला कचरा किस डिब्बे में डालना चाहिए?",
+    "प्लास्टिक कचरा कहाँ डालें?",
+    "बैटरी का कचरा किस श्रेणी में आता है?"
+  ]
 };
 
-function setLang(l) {
+function startGame(l) {
   lang = l;
-  document.getElementById("gameBox").style.display = "block";
-  document.getElementById("title").innerText = data[l].title;
-  document.getElementById("question").innerText = data[l].q;
-  document.getElementById("result").innerText = "";
+  document.getElementById("gameArea").style.display = "block";
+  nextQuestion();
+}
+
+function nextQuestion() {
+  let list = questions[lang];
+  let q = list[Math.floor(Math.random() * list.length)];
+  document.getElementById("question").innerText = q;
+  document.getElementById("feedback").innerText = "";
 }
 
 function answer(isCorrect) {
-  document.getElementById("result").innerText =
-    isCorrect ? "✅ Correct! Move Forward" : "❌ Wrong! Stay Back";
+  if(isCorrect) {
+    document.getElementById("feedback").innerText = "✅ Good! Keep going";
+  } else {
+    document.getElementById("feedback").innerText = "❌ Try again next time!";
+  }
+  setTimeout(nextQuestion, 1000);
 }
 </script>
 
 </body>
-  </html>
-  
+</html>
