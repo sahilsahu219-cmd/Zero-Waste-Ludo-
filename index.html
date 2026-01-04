@@ -1,13 +1,83 @@
-index.html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Zero Waste Ludo</title>
+  <title>Zero Waste Ludo – School Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #e8f5e9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { color: #2e7d32; }
+    button {
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #4caf50;
+      color: white;
+    }
+    .box {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
-<body style="text-align:center; font-family:Arial; background:#e8f5e9;">
-  <h1>♻️ Zero Waste Ludo</h1>
-  <p>Website is working successfully ✅</p>
-  <p>Solid Waste Management Awareness Game</p>
+<body>
+
+<h1>♻️ Zero Waste Ludo</h1>
+<p>Choose Language / भाषा चुनें</p>
+
+<button onclick="setLang('en')">English</button>
+<button onclick="setLang('hi')">हिंदी</button>
+
+<div class="box" id="gameBox" style="display:none;">
+  <h2 id="title"></h2>
+  <p id="question"></p>
+  <button onclick="answer(true)">✔ Correct</button>
+  <button onclick="answer(false)">✖ Wrong</button>
+  <p id="result"></p>
+</div>
+
+<script>
+let lang = "en";
+
+const data = {
+  en: {
+    title: "Player Turn 🎲",
+    q: "Where should wet waste be put?",
+    correct: "Green Bin",
+    wrong: "Plastic Bin"
+  },
+  hi: {
+    title: "खिलाड़ी की बारी 🎲",
+    q: "गीला कचरा कहाँ डालना चाहिए?",
+    correct: "हरे डिब्बे में",
+    wrong: "प्लास्टिक डिब्बे में"
+  }
+};
+
+function setLang(l) {
+  lang = l;
+  document.getElementById("gameBox").style.display = "block";
+  document.getElementById("title").innerText = data[l].title;
+  document.getElementById("question").innerText = data[l].q;
+  document.getElementById("result").innerText = "";
+}
+
+function answer(isCorrect) {
+  document.getElementById("result").innerText =
+    isCorrect ? "✅ Correct! Move Forward" : "❌ Wrong! Stay Back";
+}
+</script>
+
 </body>
-</html>
+  </html>
+  
