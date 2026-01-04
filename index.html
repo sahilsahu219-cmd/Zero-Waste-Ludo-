@@ -1,88 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Zero Waste Ludo – School Game</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background: #e8f5e9;
-  padding: 20px;
-}
-button {
-  padding: 12px 20px;
-  margin: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  background: #4caf50;
-  color: white;
-  cursor: pointer;
-}
-#gameArea {
-  display: none;
-  margin-top: 30px;
-}
-#question {
-  font-size: 18px;
-  margin: 20px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Zero Waste Ludo Quiz</title>
+  <style>
+    body { font-family: Arial; text-align: center; background:#e8f5e9; }
+    button { margin:8px; padding:10px 15px; font-size:16px; }
+  </style>
 </head>
 <body>
 
-<h1>♻️ Zero Waste Ludo</h1>
-<p>Select Language / भाषा चुनें</p>
-
-<button onclick="startGame('en')">English</button>
-<button onclick="startGame('hi')">हिंदी</button>
-
-<div id="gameArea">
-  <p id="question"></p>
-  <button onclick="answer(true)">✔️ Correct</button>
-  <button onclick="answer(false)">❌ Wrong</button>
-  <p id="feedback"></p>
-</div>
+<h1>♻ Zero Waste Game</h1>
+<h2 id="question">Loading...</h2>
+<div id="options"></div>
 
 <script>
-let lang = "";
-const questions = {
-  en: [
-    "Which bin is used for wet waste?",
-    "Where should plastic waste go?",
-    "What kind of waste is battery waste?"
-  ],
-  hi: [
-    "गीला कचरा किस डिब्बे में डालना चाहिए?",
-    "प्लास्टिक कचरा कहाँ डालें?",
-    "बैटरी का कचरा किस श्रेणी में आता है?"
-  ]
-};
-
-function startGame(l) {
-  lang = l;
-  document.getElementById("gameArea").style.display = "block";
-  nextQuestion();
-}
-
-function nextQuestion() {
-  let list = questions[lang];
-  let q = list[Math.floor(Math.random() * list.length)];
-  document.getElementById("question").innerText = q;
-  document.getElementById("feedback").innerText = "";
-}
-
-function answer(isCorrect) {
-  if(isCorrect) {
-    document.getElementById("feedback").innerText = "✅ Good! Keep going";
-  } else {
-    document.getElementById("feedback").innerText = "❌ Try again next time!";
+const questions = [
+  {
+    q: "Wet waste ka example kya hai?",
+    options: ["Plastic", "Vegetable peels", "Glass", "Metal"],
+    correct: 1
+  },
+  {
+    q: "Dry waste ka example kya hai?",
+    options: ["Food waste", "Tea leaves", "Paper", "Fruit"],
+    correct: 2
+  },
+  {
+    q: "Compost kis se banta hai?",
+    options: ["Plastic", "Wet waste", "Glass", "Metal"],
+    correct: 1
+  },
+  {
+    q: "Single use plastic ka example?",
+    options: ["Cloth bag", "Steel bottle", "Plastic straw", "Glass jar"],
+    correct: 2
   }
-  setTimeout(nextQuestion, 1000);
-}
-</script>
+];
 
-</body>
-</html>
+let index = 0;
+
+function loadQuestion() {
+  document.getElementById("options").innerHTML = "";
+  document.getElementById("question").innerText = questions[index].q;
+
+  questions[index].options.forEach((opt, i) => {
+    let btn = document.createElement("button");
+    btn.innerText = opt;
+    btn.onclick = () => next(i);
+    document.getElementById("options").appendChild(btn);
+  });
+}
+
+function next(i) {
+  index++;
+  if (index < questions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById("question").innerText =
+      "🎉 Game Over – Zero Waste Champion!";
+    document.getElementById("options").innerHTML =
+  
